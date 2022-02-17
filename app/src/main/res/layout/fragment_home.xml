@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+        <com.google.android.material.tabs.TabLayout
+
+            app:tabSelectedTextColor="#7799fd"
+            app:tabPaddingBottom="0dp"
+            app:tabTextColor="#a2a2a2"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:tabBackground="@null"
+            app:tabIndicatorColor="#000000"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable"
+            app:tabPaddingEnd="20dp"
+            app:tabPaddingStart="20dp"
+            app:tabMaxWidth="200dp"
+            app:tabMinWidth="100dp"
+            android:fontFamily="sans-serif-light"
+            />
+        <androidx.viewpager2.widget.ViewPager2
+
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            app:tabSelectedTextColor="#7799fd"-->
+<!--            app:tabPaddingBottom="0dp"-->
+<!--            android:id="@+id/tabs"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            app:tabIndicator="@drawable/indicator_custom"-->
+<!--            app:tabIndicatorFullWidth="false"-->
+<!--            app:tabGravity="center"-->
+<!--            app:tabIndicatorColor="#7799fd"-->
+<!--            app:tabMode="scrollable"-->
+<!--            app:tabMaxWidth="0dp"-->
+<!--            app:tabRippleColor="@color/black"-->
+<!--            app:tabMinWidth="30dp"-->
+
+<!--            />-->
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</layout>
