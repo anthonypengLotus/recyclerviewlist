@@ -8,17 +8,17 @@
 
         <variable
             name="viewModel"
-            type="com.example.myapplication.viewModel.RefreshViewModel" />
+            type="com.example.myapplication.viewModel.ArticleListViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.RefreshTokenFragment">
+        tools:context=".fragment.SplashFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:text="@{viewModel.loadingContent}"
+            android:text="@{viewModel.splashContent}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
              />

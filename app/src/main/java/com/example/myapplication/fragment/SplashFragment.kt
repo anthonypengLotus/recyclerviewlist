@@ -7,24 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.R
+import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentRefreshTokenBinding
-import com.example.myapplication.viewModel.RefreshViewModel
+import com.example.myapplication.viewModel.ArticleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
 /**
  * A simple [Fragment] subclass.
- * Use the [RefreshTokenFragment.newInstance] factory method to
+ * Use the [SplashFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class RefreshTokenFragment : Fragment() {
+class SplashFragment : Fragment() {
     private lateinit var refreshBinding: FragmentRefreshTokenBinding
 
     private var splashJob: Job? = null
 
-    private val splashViewModel: RefreshViewModel by viewModels()
+    private val splashViewModel: ArticleListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,20 @@ class RefreshTokenFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeUi()
         requestData()
+    }
+
+    private fun subscribeUi() {
+        splashViewModel.token.observe(viewLifecycleOwner){
+            splashJob = lifecycleScope.launchWhenResumed {
+                splashViewModel.getCategoryList(it)
+            }
+        }
+        splashViewModel.categoryList.observe(viewLifecycleOwner){
+            val direction = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+            view?.findNavController()?.navigate(direction)
+        }
     }
 
     override fun onDestroyView() {
@@ -49,7 +62,7 @@ class RefreshTokenFragment : Fragment() {
     private fun requestData() {
         splashJob?.cancel()
         splashJob = lifecycleScope.launchWhenResumed {
-            splashViewModel.requestData(requireContext(), viewLifecycleOwner, view)
+            splashViewModel.reFresh()
         }
     }
 }

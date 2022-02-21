@@ -10,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailBinding
@@ -32,7 +33,9 @@ class DetailFragment : Fragment() {
         // https://developer.android.com/topic/libraries/data-binding/architecture
         playerDetailBinding = FragmentDetailBinding.inflate(inflater, container, false)
         playerDetailBinding.lifecycleOwner = viewLifecycleOwner
-
+        playerDetailBinding.toolbar.setNavigationOnClickListener { view ->
+            view.findNavController().navigateUp()
+        }
         return playerDetailBinding.root
     }
 

@@ -2,22 +2,18 @@ package com.example.myapplication.api
 
 
 
-import TrustAllCerts
-import TrustAllHostnameVerifier
-import com.example.myapplication.data.database.ArticleEntity
+import com.example.myapplication.securty.TrustAllCerts
+import com.example.myapplication.securty.TrustAllHostnameVerifier
 import com.example.myapplication.data.response.ArticleListResponse
-import com.example.myapplication.data.response.ArticleResponse
-import com.example.myapplication.data.response.DataResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.security.SecureRandom
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.X509TrustManager
 
 interface ArticleService {
 
@@ -45,7 +41,10 @@ interface ArticleService {
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
-                .sslSocketFactory(createSSLSocketFactory(),TrustAllCerts())
+//                .sslSocketFactory(createSSLSocketFactory(),com.example.myapplication.securty.TrustAllCerts())
+                .connectTimeout(2, TimeUnit.MINUTES)
+                .writeTimeout(2, TimeUnit.MINUTES) // write timeout
+                .readTimeout(2, TimeUnit.MINUTES)
                 .hostnameVerifier(TrustAllHostnameVerifier())
                 .build()
 

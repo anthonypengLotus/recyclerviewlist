@@ -47,7 +47,7 @@ class ArticleListFragment(private var api:String) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeUI()
-        requestData()
+
     }
 
     override fun onDestroyView() {
@@ -61,12 +61,23 @@ class ArticleListFragment(private var api:String) : Fragment() {
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         )
         articlesBinding.playerList.adapter = articlesAdapter
+        if (api=="ccc"){
+            articlesViewModel.listFeed.observe(viewLifecycleOwner){
+                    data->articlesAdapter.submitList(data)
+            }
+        }else{
+            articlesViewModel.articles.observe(viewLifecycleOwner){
+                    data->articlesAdapter.submitList(data)
+            }
+            requestData()
+        }
+
     }
 
     private fun requestData() {
         playersJob?.cancel()
         playersJob = lifecycleScope.launchWhenResumed {
-            articlesViewModel.requestData(viewLifecycleOwner, articlesAdapter,api)
+            articlesViewModel.requestData(api)
         }
     }
 }
