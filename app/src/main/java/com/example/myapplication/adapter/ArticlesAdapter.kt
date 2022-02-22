@@ -29,7 +29,6 @@ class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(Play
         (holder as PlayersViewHolder).bind(item)
     }
 
-
     class PlayersViewHolder(
         private val binding: ListItemArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
