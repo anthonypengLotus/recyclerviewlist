@@ -15,19 +15,16 @@ import javax.inject.Singleton
 
 @Singleton
 class ArticlesRepository @Inject constructor(private val navigationDao: NavigationDao,private val articlesDao: ArticleDao,private val serviceArticles: ArticleService,private val service: ShopService) {
-
     suspend fun getToken(): String? {
         val response = service.refresh("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVHlwZSI6InVzZXJzIiwiZW1haWwiOiI5OTYyNjcwNzdAcXEuY29tIiwiaWQiOiI2MjFjMDEwZTc1ZDU0ZTY5YWYyYTQ3NWU0NGUwMTVkZCIsImtleV9pZCI6Ijc5OTBjMGE2MzU4ODQ4MzI5ODAzNzhlZmU3OTNlNDFlIiwiZXBvY2giOjE2NDQ0ODI0NTIsInBhcnRuZXJfbmFtZSI6ImFuZHJvaWQtYXBwIiwidHlwZSI6MCwiaWF0IjoxNjQ0NDgxODUyLCJleHAiOjE2NDk2NjU4NTJ9.qrjAZve690sib09BzdqcnQptkw7K_GmtP3DmBp8H7Uo")
         response.headers()
         return (response.headers()["x-amzn-Remapped-authorization"])
-
     }
     suspend fun getCategoryList(token: String): Boolean {
 
         return try {
             val response = service.navigation(token)
             response.d.article
-
             val articles: MutableList<ArticleEntity> = mutableListOf()
             val rawArticle = response.d.article
             rawArticle.mapIndexed { i, article ->
@@ -68,11 +65,8 @@ class ArticlesRepository @Inject constructor(private val navigationDao: Navigati
             return false
         }
     }
-
     suspend fun getArticles(api: String) : ArrayList<ArticleEntity>{
-
             val response = serviceArticles.productList(api)
-
             val articles: ArrayList<ArticleEntity> = arrayListOf()
             val rawArticle = response.res.article
             rawArticle.mapIndexed { i, article ->
@@ -89,6 +83,5 @@ class ArticlesRepository @Inject constructor(private val navigationDao: Navigati
             return articles
     }
     fun getArticles() = articlesDao.getList()
-
     fun getPlayers() = navigationDao.getList()
 }

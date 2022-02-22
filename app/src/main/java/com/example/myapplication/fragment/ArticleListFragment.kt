@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,9 +30,8 @@ class ArticleListFragment(private var api:String) : Fragment() {
 
     private lateinit var articlesBinding: FragmentArticleListBinding
 
-    private var playersJob: Job? = null
 
-    private val articlesViewModel: ArticleListViewModel by viewModels()
+    private val articlesViewModel: ArticleListViewModel by activityViewModels()
 
     private lateinit var articlesAdapter: ArticlesAdapter
 
@@ -50,10 +50,6 @@ class ArticleListFragment(private var api:String) : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        playersJob?.cancel()
-        super.onDestroyView()
-    }
 
     private fun subscribeUI() {
         articlesAdapter = ArticlesAdapter()
@@ -75,9 +71,6 @@ class ArticleListFragment(private var api:String) : Fragment() {
     }
 
     private fun requestData() {
-        playersJob?.cancel()
-        playersJob = lifecycleScope.launchWhenResumed {
-            articlesViewModel.requestData(api)
-        }
+        articlesViewModel.requestData(api)
     }
 }

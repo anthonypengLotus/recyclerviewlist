@@ -29,8 +29,6 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Bind layout views to Architecture Components.
-        // https://developer.android.com/topic/libraries/data-binding/architecture
         playerDetailBinding = FragmentDetailBinding.inflate(inflater, container, false)
         playerDetailBinding.lifecycleOwner = viewLifecycleOwner
         playerDetailBinding.toolbar.setNavigationOnClickListener { view ->
@@ -52,10 +50,6 @@ class DetailFragment : Fragment() {
                 return true
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 
 }

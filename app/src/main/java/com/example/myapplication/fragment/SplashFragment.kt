@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -22,9 +23,7 @@ import kotlinx.coroutines.Job
 class SplashFragment : Fragment() {
     private lateinit var refreshBinding: FragmentRefreshTokenBinding
 
-    private var splashJob: Job? = null
-
-    private val splashViewModel: ArticleListViewModel by viewModels()
+    private val splashViewModel: ArticleListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +36,7 @@ class SplashFragment : Fragment() {
 
         return refreshBinding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeUi()
@@ -44,25 +44,17 @@ class SplashFragment : Fragment() {
     }
 
     private fun subscribeUi() {
-        splashViewModel.token.observe(viewLifecycleOwner){
-            splashJob = lifecycleScope.launchWhenResumed {
-                splashViewModel.getCategoryList(it)
-            }
+        splashViewModel.token.observe(viewLifecycleOwner) {
+            splashViewModel.getCategoryList(it)
+
         }
-        splashViewModel.categoryList.observe(viewLifecycleOwner){
+        splashViewModel.categoryList.observe(viewLifecycleOwner) {
             val direction = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
             view?.findNavController()?.navigate(direction)
         }
     }
 
-    override fun onDestroyView() {
-        splashJob?.cancel()
-        super.onDestroyView()
-    }
     private fun requestData() {
-        splashJob?.cancel()
-        splashJob = lifecycleScope.launchWhenResumed {
-            splashViewModel.reFresh()
-        }
+        splashViewModel.reFresh()
     }
 }

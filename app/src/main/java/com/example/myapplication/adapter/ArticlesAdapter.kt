@@ -25,8 +25,8 @@ class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(Play
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val player = getItem(position)
-        (holder as PlayersViewHolder).bind(player)
+        val item = getItem(position)
+        (holder as PlayersViewHolder).bind(item)
     }
 
 
@@ -35,8 +35,8 @@ class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(Play
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setClickListener {
-                binding.article?.let { player ->
-                    navigateToPlayerDetail(player, it)
+                binding.article?.let { item ->
+                    navigateToPlayerDetail(item, it)
                 }
             }
         }
