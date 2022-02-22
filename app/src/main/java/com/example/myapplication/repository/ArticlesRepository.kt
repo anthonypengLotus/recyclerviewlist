@@ -83,5 +83,5 @@ class ArticlesRepository @Inject constructor(private val navigationDao: Navigati
             return articles
     }
     fun getArticles() = articlesDao.getList()
-    fun getPlayers() = navigationDao.getList()
+    fun getCategory() = navigationDao.getList()
 }

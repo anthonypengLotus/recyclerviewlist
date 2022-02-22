@@ -20,7 +20,7 @@ import kotlinx.coroutines.Job
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private lateinit var playerDetailBinding: FragmentDetailBinding
+    private lateinit var detailBinding: FragmentDetailBinding
 
     private val args: DetailFragmentArgs by navArgs()
 
@@ -29,17 +29,17 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        playerDetailBinding = FragmentDetailBinding.inflate(inflater, container, false)
-        playerDetailBinding.lifecycleOwner = viewLifecycleOwner
-        playerDetailBinding.toolbar.setNavigationOnClickListener { view ->
+        detailBinding = FragmentDetailBinding.inflate(inflater, container, false)
+        detailBinding.lifecycleOwner = viewLifecycleOwner
+        detailBinding.toolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigateUp()
         }
-        return playerDetailBinding.root
+        return detailBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val webView = playerDetailBinding.webView
+        val webView = detailBinding.webView
         webView.loadUrl(args.uri)
         webView.webViewClient= object :WebViewClient(){
             override fun shouldOverrideUrlLoading(

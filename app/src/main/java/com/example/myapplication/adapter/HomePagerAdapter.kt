@@ -4,7 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.myapplication.data.database.NavigationEntity
 import com.example.myapplication.fragment.ArticleListFragment
-import com.example.myapplication.fragment.HomeFragment
+import okhttp3.Interceptor.Companion.invoke
+import javax.xml.datatype.DatatypeFactory.newInstance
 
 
 class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
@@ -20,8 +21,8 @@ class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     }
 
     override fun createFragment(position: Int): Fragment {
-        return ArticleListFragment(tabFragmentsCreators[position].key)
-//        return ArticleListFragment.newInstance("")
+//        return ArticleListFragment(tabFragmentsCreators[position].key)
+        return ArticleListFragment.newInstance(tabFragmentsCreators[position].key)
     }
 
     fun putData(list: List<NavigationEntity>) {

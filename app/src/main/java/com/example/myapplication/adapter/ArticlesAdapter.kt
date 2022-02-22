@@ -12,10 +12,10 @@ import com.example.myapplication.databinding.ListItemArticleBinding
 import com.example.myapplication.fragment.HomeFragmentDirections
 
 
-class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(PlayersDiffCallback()) {
+class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(ArticlesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PlayersViewHolder(
+        return ArticlesViewHolder(
             ListItemArticleBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -26,23 +26,23 @@ class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(Play
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder as PlayersViewHolder).bind(item)
+        (holder as ArticlesViewHolder).bind(item)
     }
 
-    class PlayersViewHolder(
+    class ArticlesViewHolder(
         private val binding: ListItemArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setClickListener {
                 binding.article?.let { item ->
-                    navigateToPlayerDetail(item, it)
+                    navigateToArticlesDetail(item, it)
                 }
             }
         }
 
-        private fun navigateToPlayerDetail(player: ArticleEntity, view: View) {
+        private fun navigateToArticlesDetail(article: ArticleEntity, view: View) {
             val direction =
-                HomeFragmentDirections.actionHomeFragmentToPlayerDetailFragment(player.web_view)
+                HomeFragmentDirections.actionHomeFragmentToArticlesDetailFragment(article.web_view)
             view.findNavController().navigate(direction)
         }
 
@@ -55,7 +55,7 @@ class ArticlesAdapter : ListAdapter<ArticleEntity, RecyclerView.ViewHolder>(Play
     }
 }
 
-class PlayersDiffCallback : DiffUtil.ItemCallback<ArticleEntity>() {
+class ArticlesDiffCallback : DiffUtil.ItemCallback<ArticleEntity>() {
 
     override fun areItemsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
         return oldItem.api == newItem.api

@@ -21,7 +21,7 @@ class ArticleListViewModel @Inject constructor(
     var lastIns = 0
 
     val categoryResponseData: LiveData<List<NavigationEntity>> =
-        articlesRepository.getPlayers().asLiveData()
+        articlesRepository.getCategory().asLiveData()
 
     fun requestData(api: String) {
         viewModelScope.launch {

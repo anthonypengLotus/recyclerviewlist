@@ -35,6 +35,10 @@ class ArticleListFragment(private var api:String) : Fragment() {
 
     private lateinit var articlesAdapter: ArticlesAdapter
 
+    companion object {
+        fun newInstance(api: String) = ArticleListFragment(api)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,10 +57,10 @@ class ArticleListFragment(private var api:String) : Fragment() {
 
     private fun subscribeUI() {
         articlesAdapter = ArticlesAdapter()
-        articlesBinding.playerList.addItemDecoration(
+        articlesBinding.articlesList.addItemDecoration(
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         )
-        articlesBinding.playerList.adapter = articlesAdapter
+        articlesBinding.articlesList.adapter = articlesAdapter
         if (api=="ccc"){
             articlesViewModel.listFeed.observe(viewLifecycleOwner){
                     data->articlesAdapter.submitList(data)

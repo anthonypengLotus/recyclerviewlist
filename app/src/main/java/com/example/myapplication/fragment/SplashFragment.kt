@@ -31,9 +31,6 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         refreshBinding = FragmentRefreshTokenBinding.inflate(inflater, container, false)
-        refreshBinding.lifecycleOwner = viewLifecycleOwner
-        refreshBinding.viewModel = splashViewModel
-
         return refreshBinding.root
     }
 

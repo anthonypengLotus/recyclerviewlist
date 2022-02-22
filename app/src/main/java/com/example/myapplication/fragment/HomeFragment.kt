@@ -27,8 +27,7 @@ import kotlinx.coroutines.Job
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager: ViewPager2
+
     private lateinit var homeBinding: FragmentHomeBinding
     private var ins = 0
     private val homeViewModel: ArticleListViewModel by activityViewModels()
@@ -43,18 +42,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tabLayout = homeBinding.tabs
-        viewPager = homeBinding.viewPager
-
-        subscribeUi(viewPager)
+        subscribeUi()
     }
-    private fun subscribeUi(viewpager2: ViewPager2) {
+    private fun subscribeUi() {
         homeViewModel.categoryResponseData.observe(viewLifecycleOwner) { data ->
             val homeAdapter = HomePagerAdapter(this)
-            viewpager2.adapter = homeAdapter
+            homeBinding.viewPager.adapter = homeAdapter
             homeAdapter.putData(data)
 
-            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            homeBinding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab1: TabLayout.Tab?) {
                     if (tab1 != null) {
                         ins = tab1.position
@@ -76,14 +72,14 @@ class HomeFragment : Fragment() {
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                 }
             })
-            TabLayoutMediator(tabLayout, viewpager2) { tab, position ->
+            TabLayoutMediator(homeBinding.tabs, homeBinding.viewPager) { tab, position ->
                 var binding = TabArticlesBinding.inflate(LayoutInflater.from(requireContext()))
                 tab.customView = binding.root
                 binding.title.text = data[position].name
 
             }.attach()
-            viewPager.currentItem = homeViewModel.lastIns
-            tabLayout.getTabAt(homeViewModel.lastIns)?.select()
+            homeBinding.viewPager.currentItem = homeViewModel.lastIns
+            homeBinding.tabs.getTabAt(homeViewModel.lastIns)?.select()
 
         }
     }
